@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #
 from tkinter import *
 from tkinter import messagebox
@@ -169,3 +170,6 @@ if __name__ == '__main__':
     main()
 
 
+=======
+import numpy as np
+>>>>>>> e71ac41c8816297de2a5ea2768f4fea42e7fb447
