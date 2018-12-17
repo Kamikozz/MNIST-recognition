@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from main import CNN
 from skimage import data,io,filters
+import numpy as np
 
 
 class Paint(Frame):
@@ -40,12 +41,23 @@ class Paint(Frame):
                           height=int(self.canv.winfo_height()*self.scale),
                           pagewidth=int(self.canv.winfo_width()*self.scale) - 1,
                           pageheight=int(self.canv.winfo_height()*self.scale) - 1)
-        #self.canv.scale(ALL, 0, 0, 1/self.scale,1/self.scale)
+        self.canv.scale(ALL, 0, 0, 1/self.scale,1/self.scale)
 
         # read the postscript data
         # [row][column][R G B]
         # data = numpy ndarray (n-dimensional array). Final picture = 404x404 (from original canvas = 400x400)
         data = io.imread('tmp_canvas.eps')
+        # write a rasterized png file
+        io.imsave("canvas_image.png", data)
+        data = data.reshape(28*28,3)
+        res = []
+        for i in data:
+            res.append(255-i[0])
+        res = np.array(res)
+        print(res)
+
+        #data = [i[0] for i in data]
+        # print(data)
         # print(data.ndim)
         # print(data[185][24])
         # print(data[186][24])
@@ -69,8 +81,8 @@ class Paint(Frame):
 
         # print(data[403].__len__())
 
-        #write a rasterized png file
-        io.imsave("canvas_image.png", data)
+        # #write a rasterized png file
+        # io.imsave("canvas_image.png", data)
 
         result = CNN.calc(self.message.get())
 
